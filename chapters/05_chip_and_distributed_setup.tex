@@ -1,0 +1,36 @@
+\chapter{Chip-Scale and Distributed System Concepts}
+
+\section{Motivation for Chip-Scale Integration}
+
+The fiber experiments validate the basic optical injection-locking and coherent-interference workflow, but a practical distributed photonic processor requires a compact and stable implementation. Chip-scale integration reduces optical path drift, improves mechanical stability, and makes it possible to replicate injection-locked coherent processing nodes across many wavelengths or spatial channels.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{onchip_devices_layout.png}
+    \caption{Conceptual chip-scale implementation of the injection-locking and coherent-processing node. The chip-level layout is intended to replace the fiber components used in the validation experiment with integrated optical routing, modulation, interference, and detection.}
+    \label{fig:onchip_setup_concept}
+\end{figure}
+
+Figure~\ref{fig:onchip_setup_concept} shows the planned chip-scale direction. In this implementation, the injected laser, optical routing, modulation stage, interferometric combiner, and detection path are treated as parts of one integrated coherent processing node. The goal is not only to shrink the experiment, but also to make the relative phase and polarization state more stable than in a long fiber setup.
+
+\section{Distributed Coherent Processing Concept}
+
+The long-term system target is a distributed architecture in which a remote optical signal carries data to one or more local processing nodes. Each node recovers coherence through optical injection locking, remodulates a local carrier, and performs interference-based computation with the retained remote signal. This approach avoids transmitting a separate high-power local oscillator to every processing node while preserving the phase reference needed for coherent detection.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{distributed_application.png}
+    \caption{Distributed coherent-processing concept based on injection-locked local nodes. A remote optical carrier can seed local coherent sources, allowing the computation to be distributed without requiring every node to receive a separate dedicated local oscillator.}
+    \label{fig:distributed_application}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.78\textwidth]{distributed_matrix.png}
+    \caption{Conceptual distributed matrix-processing layout. Injection-locked local carriers provide coherence at multiple processing locations, while local modulation and interference perform analog optical computation.}
+    \label{fig:distributed_matrix}
+\end{figure}
+
+\section{Open Experimental Tasks}
+
+The chip-scale and distributed layouts remain conceptual at this stage of the thesis. The immediate experimental task is to transfer the fiber-validated injection-locking and interference workflow onto an integrated platform, then repeat the same locking-range, modulation-transfer, and coherent-interference measurements. After that, the architecture can be extended toward multiple processing nodes, wavelength-parallel operation, and system-level matrix computation.

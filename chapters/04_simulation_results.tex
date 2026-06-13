@@ -1,56 +1,57 @@
-\chapter{Experimental Validation and System Outlook}
+\chapter{Fiber Experimental Validation}
 
-\section{Proposal Stage Experimental Direction}
+\section{Experimental Objective}
 
-The simulation study establishes the design rules for injection-locking-based distributed coherent processing. The proposal stage experimental work provides the next step: validating these ideas using physical semiconductor lasers, optical modulators, optical spectrum measurements, and coherent interference measurements. The experiments are organized around three questions. First, can a local laser be reliably locked to a remote source carrier? Second, how does modulation on the source influence the locking process? Third, can the locked laser be used in a coherent interference system for optical-domain computation?
+The fiber experiment tests whether the injection-locking behavior predicted by the rate-equation simulations appears in a physical optical link. The key comparison in this chapter uses an experimental injection ratio of -15~dB and compares it with the -40~dB simulation condition from Chapter~3. The difference between these numerical values reflects the parameter matching between the experimental laser powers and the normalized simulation model; throughout this comparison the simulation uses $\alpha=2$ and threshold 1.944, corresponding to the injected-laser output near 0~dBm.
 
-\section{Locking-Range Measurement}
+\section{Unmodulated Source Injection}
 
-The unmodulated-source experiment measures the baseline locking range of the local injected laser. A tunable source laser is attenuated to set the injection ratio and injected into the target laser through an optical circulator. The output is monitored in both the wavelength domain and the frequency domain. This measurement establishes where the target mode dominates and how the locking boundary shifts with injection ratio.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.84\textwidth]{nomodulation_setup.png}
-    \caption{Experimental setup for measuring injection-locking range with an unmodulated source laser. The electro-optic modulator is retained in the path so that the optical layout remains consistent with the modulated-source experiment.}
-    \label{fig:exp_nomod_setup}
-\end{figure}
+The unmodulated experiment measures the baseline carrier-locking behavior. A tunable source laser is injected into the target laser through a fiber-based injection path, and the injected laser output is monitored while the detuning is swept. This measurement establishes the locking range and identifies the residual RF features that remain after the carrier is locked.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.72\textwidth]{LR_IR.png}
-    \caption{Proposal stage locking-range measurement as a function of injection ratio. The data show that the locking range broadens as injection ratio increases and that the locking boundary is asymmetric with detuning.}
-    \label{fig:exp_lr_ir}
+    \includegraphics[width=0.92\textwidth]{fiber_unmodulated_source_setup.png}
+    \caption{Fiber setup for unmodulated-source optical injection locking. This configuration measures the baseline locking response before modulation sidebands are added to the source.}
+    \label{fig:fiber_unmodulated_setup}
 \end{figure}
 
 \section{Modulated Source Injection}
 
-The modulated-source experiment introduces sidebands on the remote signal before injection. This is closer to the intended distributed computing use case, where the remote carrier carries data. As the carrier and its modulation sidebands sweep across the locking region, different spectral components can interact with the injected laser. The measurement therefore probes whether sidebands participate in locking or create unwanted nonlinear response.
+The modulated-source experiment adds data-like sidebands to the source before injection. This configuration is closer to the intended distributed coherent computing system, where the remote optical carrier also carries information. The measurement probes whether the injected laser locks primarily to the carrier or whether source modulation leaks into the recovered local carrier.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.84\textwidth]{modulation_setup.png}
-    \caption{Experimental setup for injection locking with a modulated source laser. Modulation sidebands around the carrier can influence the locking process when they enter or approach the locking range.}
-    \label{fig:exp_mod_setup}
+    \includegraphics[width=0.92\textwidth]{fiber_modulated_source_setup.png}
+    \caption{Fiber setup for modulated-source injection locking. The source laser is modulated before injection so that the carrier-locking process can be evaluated in the presence of sidebands.}
+    \label{fig:fiber_modulated_setup}
 \end{figure}
 
-\section{Coherent Interference Experiment}
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=\textwidth]{fiber_experiment_neg15_summary.png}
+    \caption{Fiber experimental measurements at -15~dB injection ratio. Panels (a) and (b) show the unmodulated-source spectrum and RF response versus detuning. Panels (c) and (d) show the corresponding modulated-source measurements. The modulated case introduces additional sideband-related response while retaining the carrier-locking structure.}
+    \label{fig:fiber_experiment_neg15_summary}
+\end{figure}
 
-After carrier locking is established, the local laser can be remodulated and interfered with the retained remote branch. A balanced detection architecture extracts the interference cross term, while phase stabilization is used to hold the interferometer at a useful operating point. This experiment connects the laser-level locking measurements to the coherent-computing mechanism studied in simulation.
+Figure~\ref{fig:fiber_experiment_neg15_summary} compares the unmodulated and modulated fiber measurements. In the unmodulated case, the dominant features follow the expected detuning-dependent locking boundary. In the modulated case, additional spectral and RF structures appear because the injected field contains modulation sidebands. These features are consistent with the simulation result that the injected laser can remain carrier locked while still exhibiting residual modulation transfer near sensitive detuning and modulation-frequency regions.
+
+\section{Comparison with the Simulation Model}
+
+The experimental -15~dB injection condition is compared with the -40~dB simulation condition using $\alpha=2$ and threshold 1.944. The threshold value is chosen because it matches the injected-laser output condition near 0~dBm. The comparison is therefore qualitative and model-matched rather than a direct equality between optical power ratios. In both experiment and simulation, the useful operating region is the one where the carrier remains locked while the residual RF response and sideband transfer remain low.
+
+The threshold comparison in Fig.~\ref{fig:simulation_threshold_comparison} also explains why this matching is important. Changing the threshold changes the simulated locking boundary and residual response pattern, so the same nominal injection ratio can represent different physical operating regimes unless the threshold is matched to the laser output condition.
+
+\section{Coherent Fiber Interference Setup}
+
+After carrier locking is established, the recovered local carrier can be remodulated and interfered with a retained branch of the remote signal. The fiber interference setup is the experimental bridge between laser-level locking measurements and coherent optical computation. It uses the injection-locked laser as the local coherent source and balanced detection to extract the interference term.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\textwidth]{interference_sch.png}
-    \caption{Experimental coherent-interference setup using an injection-locked local laser and a retained branch of the remote source signal.}
-    \label{fig:exp_interference}
+    \includegraphics[width=0.95\textwidth]{fiber_interference_setup.png}
+    \caption{Fiber coherent-interference setup using an injection-locked local laser and a retained branch of the remote source signal. This setup is the final fiber-stage validation before moving to chip-scale implementations.}
+    \label{fig:fiber_interference_setup}
 \end{figure}
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.76\textwidth]{bpd_sch.png}
-    \caption{Balanced-detection concept for extracting the interference cross term used in coherent optical computation.}
-    \label{fig:exp_bpd}
-\end{figure}
+\section{Summary}
 
-\section{Outlook}
-
-The experimental direction complements the simulation results by testing the same design trade-offs in a physical optical system. The eventual goal is to identify operating conditions where the local laser remains locked to the remote carrier, modulation leakage is low, and coherent interference is stable enough for analog optical computation. Future work will extend this validation to higher symbol rates, longer fiber links, polarization drift, amplified links, wavelength-division multiplexing, and integrated photonic implementations.
+The fiber measurements support the simulation-based design picture. Optical injection locking can provide a coherent local carrier, but the operating point must be selected using both carrier locking and residual modulation transfer. The -15~dB fiber measurements, interpreted through the $\alpha=2$, threshold 1.944 simulation model, show that modulation can modify the RF response even when the carrier-level locking signature remains visible. The next stage is to translate this fiber architecture into chip-scale and distributed system layouts.

@@ -13,6 +13,19 @@ The simulation part of this work asks a system-level question: under what operat
 
 Figure~\ref{fig:simulation_locking_overview} summarizes the first stage of this program. The rate equations are solved over a two-dimensional grid of detuning and injection ratio. For each grid point, the simulated field is checked for residual intensity oscillation and phase drift. Increasing injection ratio generally broadens the locking range, but the locked region is not merely a smooth rectangle in parameter space. When the linewidth enhancement factor is nonzero, the locking region becomes asymmetric, and stronger injection can produce localized regions of dynamical sensitivity. These features motivate a design rule that is used throughout the rest of the chapter: a useful operating point should lock the carrier robustly while avoiding unnecessarily strong injection.
 
+\section{Threshold-Dependent Locking Behavior}
+
+The supplementary simulations show that the locking map also depends on the operating threshold used in the rate-equation model. This matters when the simulation is compared with the fiber experiment, because the injected laser output power fixes the appropriate threshold normalization. In the experimental comparison used in this thesis, the injected laser output of 0~dBm is represented by a threshold value of 1.944. The simulation comparison therefore uses $\alpha=2$ and threshold 1.944. Under these parameters, a simulated injection ratio of -40~dB gives the closest qualitative comparison to the -15~dB fiber experiment.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{simulation_neg40_threshold_summary.png}
+    \caption{Simulation maps used for comparison with the fiber experiment. Panels (a) and (b) show representative -40~dB simulation responses for unmodulated and modulated injection. Panels (c) and (d) compare the same $\alpha=2$ and -40~dB condition for threshold values 1.15 and 1.944, showing that the effective threshold changes the apparent locking dynamics and the structure of the residual response.}
+    \label{fig:simulation_threshold_comparison}
+\end{figure}
+
+Figure~\ref{fig:simulation_threshold_comparison} illustrates why threshold must be treated as an experimental matching parameter rather than a purely numerical detail. Changing the threshold alters the relative strength of relaxation dynamics, residual oscillation, and the detuning range over which the field behaves as a clean locked carrier. The threshold 1.944 case is therefore used in the experimental comparison because it corresponds to the 0~dBm injected-laser operating condition used in the fiber measurements.
+
 \section{Frequency-Dependent Modulation Transfer}
 
 After the carrier-level locking region is known, the next issue is whether modulation on the remote source leaks through the injection-locked laser. This is tested by driving the remote injection field with controlled amplitude modulation and phase modulation. The resulting injected-laser field is decomposed into amplitude and phase response channels. This produces four transfer functions: amplitude-to-amplitude, amplitude-to-phase, phase-to-amplitude, and phase-to-phase.
