@@ -1,51 +1,106 @@
-\chapter{Background}
+\chapter{Theory of Optical Injection Locking}
 
-\section{Coherent and Incoherent Photonic Computing}
+\section{Why Remote Coherence Is Needed}
 
-Photonic neural-network architectures are commonly categorized as incoherent or coherent, depending on whether optical phase is used during encoding and computation. Incoherent systems operate primarily on optical intensity. They are comparatively tolerant to environmental perturbations because computation is performed through power summation rather than phase-sensitive interference. This makes incoherent designs attractive for robust photonic signal processing, but it also restricts the available signal representation. In many cases, the optical signal naturally represents non-negative real-valued quantities, and signed or complex-valued operations require additional routing, balancing, or encoding overhead.
-
-Coherent systems retain both amplitude and phase. When two coherent fields interfere, the detected signal contains a cross term proportional to the product of the fields, making coherent photonics especially attractive for dot products, matrix operations, and complex-valued computing. The benefit is also the central difficulty: the optical paths participating in the computation must maintain a stable phase relationship. On a single chip this is often handled by splitting one laser into many paths. For remote data streams generated at different locations, the same assumption no longer holds.
-
-\section{Conventional Remote-Coherence Strategies}
-
-At the proposal stage, two intuitive approaches were considered for remote coherent optical interference. In the first, a carrier laser is split at one data center, with one branch modulated locally and the other transmitted to a remote site for modulation before the two branches are interfered. Although both branches originate from one laser, the physically separated paths are sensitive to differential path-length drift caused by temperature changes, vibration, and fiber perturbations.
+The central problem addressed in this dissertation is not only how to compute with light, but how to compute coherently with optical signals that are generated at different physical locations. Conventional networked computing treats optical links mainly as communication channels. A received optical signal is converted to an electrical waveform, digitized, processed electronically, and then possibly converted back into the optical domain. This workflow is reliable, but it discards the phase relationship carried by the optical field and introduces conversion penalties at every interface.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\textwidth]{fig1a_conventional_digital.png}
-    \caption{Conventional digital processing approach for networked optical data. Remote optical information is repeatedly converted between optical, electrical, analog, and digital domains before further transmission or computation.}
-    \label{fig:theory_conventional_digital}
+    \includegraphics[width=\textwidth]{comparison_conventional_vs_oil.png}
+    \caption{Comparison between conventional digital processing and the proposed injection-locking-based coherent optical processing architecture. In the conventional path, remote optical data are repeatedly converted between optical, electrical, analog, and digital domains. In the proposed path, the remote optical carrier is used to injection-lock a local laser, enabling coherent interference and balanced detection at the local processing node.}
+    \label{fig:comparison_conventional_oil}
 \end{figure}
 
-In a second approach, an independent coherent laser is deployed at the remote site. This reduces the need to transmit a copy of the carrier, but the two lasers do not naturally share a stable phase or frequency reference. Meaningful interference therefore requires a tight locking mechanism, such as an optical phase-locked loop or an external shared frequency reference. These methods can achieve excellent stability, but they require complex feedback electronics, low-latency control, and carefully managed optical references.
+The proposed strategy is to preserve the useful optical phase reference across distance. A remotely modulated optical source is transmitted to a local processing node. Part of the received signal is used to injection-lock a local semiconductor laser, while another part is retained for later interference. The locked laser then acts as a local coherent carrier that can be independently remodulated with local data. Interference between the remote signal and the locally remodulated locked laser provides the physical multiplication mechanism required for coherent optical processing.
 
-\section{Injection-Locking-Based Remote Coherence}
+\section{Background and Development of Injection Locking}
 
-Optical injection locking provides a simpler route to remote coherence. A source laser from one location is delivered to a remote site and injected into a local semiconductor laser. When the frequency detuning and injection ratio fall within the locking range, the local laser synchronizes to the incoming optical field. The locked laser can then serve as a coherent local carrier that is remodulated and interfered with the retained remote signal.
+Injection locking is a general synchronization phenomenon in which an oscillator locks its frequency and phase to an externally injected signal. The classical description traces back to Adler's analysis of weakly forced oscillators, where locking occurs when the detuning between the free-running oscillator and the injected signal lies within a finite locking interval \cite{adler1946study}. In optical systems, the same concept appears when light from a master laser is injected into a slave laser. If the injected field is strong enough and the detuning is sufficiently small, the slave laser follows the frequency and phase of the master.
+
+For semiconductor lasers, injection locking has been studied for decades as both a fundamental nonlinear-dynamics problem and a practical tool \cite{lang1982injection,mogensen1985locking,liu2020optical}. It has been used for linewidth reduction, frequency stabilization, modulation bandwidth enhancement, coherent communication, carrier recovery, and neuromorphic photonic systems \cite{liu2015homodyne,lau2009enhanced}. These applications often exploit the fact that a relatively simple local laser can inherit the spectral reference of a remote or higher-quality optical source.
+
+The use considered here differs from many communication-oriented uses of injection locking. In coherent communication, it may be desirable for modulation information to be preserved, transferred, or enhanced. In the distributed coherent computing architecture, the desired behavior is almost the opposite: the local laser should lock to the remote carrier while suppressing the modulation sidebands carried by the remote data. This is why the locking range must be large enough to track carrier-frequency variations, but not so broad or strongly driven that the local laser reproduces unwanted remote modulation components.
+
+\section{Locking Range and Spectral Selectivity}
+
+In a simplified oscillator picture, the locking range increases with injected field strength. For semiconductor lasers, the locking interval is also shaped by carrier dynamics and amplitude-phase coupling. A commonly used expression for the asymmetric semiconductor-laser locking range is
+\begin{equation}
+    -\kappa \sqrt{1+\alpha^2}\sqrt{\frac{P_{\mathrm{remote}}}{P_0}}
+    < \Delta\omega <
+    \kappa \sqrt{\frac{P_{\mathrm{remote}}}{P_0}},
+    \label{eq:semiconductor_locking_range}
+\end{equation}
+where $\Delta\omega$ is the angular-frequency detuning between the remote and injected lasers, $P_{\mathrm{remote}}/P_0$ is the injection ratio, $\kappa$ is the effective injection coupling coefficient, and $\alpha$ is the linewidth enhancement factor. This expression captures two important design facts. First, increasing injection power increases the detuning range over which locking can occur. Second, a nonzero $\alpha$ makes the locking range asymmetric because amplitude fluctuations are coupled into phase dynamics.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\textwidth]{fig1d_coherent_setup.png}
-    \caption{Injection-locking-based coherent optical processing setup. The remote source carries data over fiber, while optical injection locking provides a coherent local carrier for remodulation and interference-based computation.}
-    \label{fig:theory_coherent_setup}
+    \includegraphics[width=0.86\textwidth]{fig1c_oil_concept_clean.png}
+    \caption{Optical injection locking concept. The remote carrier should fall within the effective locking range of the injected laser, while modulation sidebands should remain outside the range whenever possible. The locking range increases with injection ratio, creating a trade-off between detuning tolerance and modulation isolation.}
+    \label{fig:oil_concept_clean}
 \end{figure}
 
-The key design requirement is spectral selectivity. The optical carrier should fall within the target mode's locking range, while modulation sidebands should ideally remain outside that range. If a sideband enters or approaches the locking range, it can compete with the carrier and alter the dynamics of the locked laser. This motivates the locking-range, sideband-transfer, and modulation-leakage studies developed in the following chapters.
+This spectral-selectivity requirement is the key physical constraint behind the simulation work. If the locking range is too narrow, practical detuning drift may break carrier locking. If the locking range or injection strength is too large, modulation sidebands and nonlinear relaxation-oscillation dynamics can contaminate the local carrier. The design goal is therefore not maximum injection strength, but an operating point that provides adequate carrier locking with minimal residual modulation transfer.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.86\textwidth]{fig1c_oil_concept.png}
-    \caption{Optical injection locking concept. The remote carrier should lock the injected laser while modulation sidebands are suppressed outside the effective locking window; the locking range increases with injection ratio.}
-    \label{fig:theory_oil_concept}
-\end{figure}
+\section{Semiconductor Laser Rate Equations}
 
-\section{Toward Chip-Scale Implementation}
+To analyze these trade-offs beyond the static locking-range expression, this dissertation uses a semiconductor-laser rate-equation model. The injected laser is represented by a slowly varying complex intracavity field $E(t)$ and a carrier number $N(t)$. The field evolution is
+\begin{equation}
+    \frac{dE}{dt}
+    =
+    \frac{1}{2}(1+i\alpha)G\!\left(N,|E|^2\right)E
+    +
+    \kappa E_{\mathrm{inj}}(t),
+    \label{eq:field_rate_equation}
+\end{equation}
+and the carrier evolution is
+\begin{equation}
+    \frac{dN}{dt}
+    =
+    R_p
+    -
+    \frac{N}{\tau_n}
+    -
+    g\!\left(N,|E|^2\right)|E|^2.
+    \label{eq:carrier_rate_equation}
+\end{equation}
+Here $\alpha$ is the linewidth enhancement factor, $R_p$ is the pump term, $\tau_n$ is the carrier lifetime, $\kappa$ is the injection coefficient, and $E_{\mathrm{inj}}(t)$ is the injected remote-laser field. The gain is modeled with saturation as
+\begin{equation}
+    g\!\left(N,|E|^2\right)
+    =
+    \frac{g_0(N-N_0)}{1+s|E|^2},
+    \label{eq:saturated_gain}
+\end{equation}
+with net gain
+\begin{equation}
+    G\!\left(N,|E|^2\right)
+    =
+    g\!\left(N,|E|^2\right)
+    -
+    \frac{1}{\tau_s}.
+    \label{eq:net_gain}
+\end{equation}
+The parameters $g_0$, $N_0$, $s$, and $\tau_s$ denote the differential gain, transparency carrier number, gain saturation factor, and photon lifetime, respectively.
 
-The same concept can be translated toward an integrated photonic platform. In the proposal architecture, source modulation, injection locking, phase stabilization, local remodulation, and balanced detection are arranged so that low-frequency interference can be used for path stabilization while high-frequency interference provides the computational readout.
+Equations~\ref{eq:field_rate_equation}--\ref{eq:net_gain} are the core of the theoretical paper's simulation framework. They make it possible to follow the time evolution of both the optical field and the carrier population after remote injection is applied. They also naturally include amplitude-phase coupling, carrier relaxation, gain saturation, and modulation-driven perturbations. These effects are exactly what determine whether the local laser behaves as a clean carrier-recovery element or as a nonlinear device that transfers unwanted remote modulation into the local processing path.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.95\textwidth]{fig1e_distributed_architecture.png}
-    \caption{Distributed coherent optical computing architecture in which a remote source can fan out to multiple injection-locked processing nodes. Each node recovers a coherent local carrier and performs local photonic processing.}
-    \label{fig:theory_distributed_architecture}
-\end{figure}
+\section{Locking Criteria Used in Simulation}
+
+For each injection ratio and detuning, the rate equations are integrated until the transient response has decayed. The remaining steady-state window is then evaluated using two metrics. The relative intensity swing is
+\begin{equation}
+    \frac{\Delta I}{\bar{I}}
+    =
+    \frac{I_{\max}-I_{\min}}{I_{\mathrm{mean}}},
+    \qquad I(t)=|E(t)|^2,
+    \label{eq:intensity_swing}
+\end{equation}
+and the phase excursion is
+\begin{equation}
+    \Delta\phi
+    =
+    \max\!\left(\phi_{\mathrm{unwrap}}\right)
+    -
+    \min\!\left(\phi_{\mathrm{unwrap}}\right),
+    \qquad \phi(t)=\arg(E(t)).
+    \label{eq:phase_excursion}
+\end{equation}
+In the theory paper, an operating point is treated as locked when both the residual intensity swing and phase excursion are small. This practical definition identifies the region where the injected laser is sufficiently stable to serve as a coherent local carrier for downstream computation.

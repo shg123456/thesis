@@ -6,13 +6,13 @@ The rapid growth of machine learning, scientific simulation, and data-centric wo
 
 Photonics is a natural candidate for this role because optical fields can propagate with high bandwidth, low latency, and large parallelism. Integrated photonic systems have already been explored for programmable linear optics, optical neural networks, photonic tensor cores, and neuromorphic photonic processors \cite{bogaerts2020programmable,shen2017deep,feldmann2021parallel,tait2017neuromorphic,hamerly2019large}. These systems exploit interference, wavelength multiplexing, and optical fanout to perform useful mathematical transformations before the result is converted back into the electrical domain. In this sense, photonic processors are not intended to replace all digital computation. Instead, they are attractive as accelerators for operations where the physics of light naturally performs the required operation.
 
-This advantage becomes especially important in networked computing environments. Modern computing systems often rely on optical links to move information between digital processors, yet the computation itself usually remains electronic. A conventional distributed workflow therefore requires a remote optical signal to be detected, converted to an electrical waveform, digitized, buffered, processed, and then potentially converted back into the optical domain. This sequence introduces optical-to-electrical conversion, analog-to-digital conversion, buffering, and clocking overheads. These penalties are illustrated conceptually in Fig.~\ref{fig:conventional_setup}. They limit the possibility of real-time distributed optical processing, particularly when the desired computation could in principle be carried out directly on the optical waveform.
+This advantage becomes especially important in networked computing environments. Modern computing systems often rely on optical links to move information between digital processors, yet the computation itself usually remains electronic. A conventional distributed workflow therefore requires a remote optical signal to be detected, converted to an electrical waveform, digitized, buffered, processed, and then potentially converted back into the optical domain. This sequence introduces optical-to-electrical conversion, analog-to-digital conversion, buffering, and clocking overheads. These penalties are contrasted with the proposed coherent optical approach in Fig.~\ref{fig:intro_comparison}. They limit the possibility of real-time distributed optical processing, particularly when the desired computation could in principle be carried out directly on the optical waveform.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\textwidth]{fig1a_conventional_digital.png}
-    \caption{Conventional digital processing of remotely delivered optical data. Optical-to-electrical, analog-to-digital, digital-to-analog, and electrical-to-optical conversion stages introduce latency and energy penalties before the signal can be sent onward.}
-    \label{fig:conventional_setup}
+    \includegraphics[width=\textwidth]{comparison_conventional_vs_oil.png}
+    \caption{Comparison of conventional digital processing and injection-locking-based coherent optical processing. The conventional path introduces repeated conversion penalties, whereas the proposed architecture recovers a coherent local optical carrier through injection locking and performs interference-based processing at the local node.}
+    \label{fig:intro_comparison}
 \end{figure}
 
 \section{From Incoherent to Coherent Optical Processing}
@@ -31,7 +31,7 @@ For distributed coherent photonic computing, the desired use of injection lockin
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.95\textwidth]{fig1d_coherent_setup.png}
+    \includegraphics[width=0.95\textwidth]{fig1d_coherent_setup_clean.png}
     \caption{Proposed coherent optical processing setup enabled by optical injection locking. A remotely modulated signal is transmitted over fiber while a local injected laser recovers a coherent carrier reference for remodulation, interference, and balanced detection.}
     \label{fig:proposed_architecture}
 \end{figure}
@@ -46,4 +46,4 @@ The second part of the work examines modulation transfer under injection locking
 
 The final part of the work evaluates end-to-end photoelectric multiply-and-accumulate operations. Symbol sequences are applied to the remote and local optical paths, the fields are interfered using a balanced-detection model, and the detected signal is temporally integrated to estimate dot-product accuracy. These simulations connect laser-level locking behavior to computation-level fidelity and show how injection ratio affects the accuracy of distributed coherent processing.
 
-The remainder of the dissertation is organized as follows. Chapter~2 reviews the background of photonic computing, coherent optical processing, and optical injection locking. Chapter~3 presents the semiconductor laser rate-equation model and the numerical procedures used for locking-region and modulation-transfer analysis. Chapter~4 reports simulation results for locking maps, transfer functions, and symbol-level multiply-and-accumulate operations. Chapter~5 summarizes the main design guidelines and discusses future directions toward experimental validation and scalable distributed coherent photonic accelerators.
+The remainder of the dissertation is organized as follows. Chapter~2 presents the theory of optical injection locking, including its historical background, locking-range intuition, and the semiconductor-laser rate equations used in this work. Chapter~3 reports the simulation study from the theory paper, including locking maps, modulation-transfer analysis, nonlinear modulation-depth effects, and symbol-level multiply-and-accumulate simulations. Chapter~4 summarizes proposal-stage experimental validation and the system outlook. Chapter~5 summarizes the main design guidelines and discusses future directions toward experimental validation and scalable distributed coherent photonic accelerators.

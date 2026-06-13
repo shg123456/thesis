@@ -1,19 +1,70 @@
-\chapter{Theory and Model}
+\chapter{Simulation Study of Injection-Locked Photonic Networks}
 
-\section{Injection Locking Range}
+\section{Overview of the Simulation Program}
 
-Optical injection locking occurs when a local laser synchronizes its oscillation frequency and phase to an externally injected optical field. In the simplest oscillator picture, the locking range increases with the strength of the injected field and decreases with the quality factor of the free-running oscillator. For semiconductor lasers, this basic picture must be extended because the carrier density, optical gain, and refractive index are dynamically coupled.
+The simulation part of this work asks a system-level question: under what operating conditions can optical injection locking provide a coherent local carrier for distributed photonic computing without copying unwanted remote modulation onto that carrier? The answer requires several linked analyses. First, the carrier-level locking region must be identified as a function of injection ratio and detuning. Next, modulation transfer must be quantified to determine how amplitude and phase perturbations on the remote laser appear in the locked laser output. Finally, the effect of these laser-level dynamics must be tested in an end-to-end coherent multiply-and-accumulate operation.
 
-The linewidth enhancement factor links amplitude and phase dynamics, making the semiconductor-laser locking range asymmetric with respect to detuning. This asymmetry is important for the remote coherent computing architecture because practical operation requires both enough detuning tolerance for stable locking and enough spectral selectivity to reject modulation sidebands.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig2_full.png}
+    \caption{Simulation overview and carrier-level locking-region maps. The rate-equation model is swept over injection ratio and frequency detuning to determine where the injected laser reaches stable intensity and phase behavior. These maps establish the operating window used for later modulation-transfer and computation-level simulations.}
+    \label{fig:simulation_locking_overview}
+\end{figure}
 
-\section{Rate-Equation Simulation Framework}
+Figure~\ref{fig:simulation_locking_overview} summarizes the first stage of this program. The rate equations are solved over a two-dimensional grid of detuning and injection ratio. For each grid point, the simulated field is checked for residual intensity oscillation and phase drift. Increasing injection ratio generally broadens the locking range, but the locked region is not merely a smooth rectangle in parameter space. When the linewidth enhancement factor is nonzero, the locking region becomes asymmetric, and stronger injection can produce localized regions of dynamical sensitivity. These features motivate a design rule that is used throughout the rest of the chapter: a useful operating point should lock the carrier robustly while avoiding unnecessarily strong injection.
 
-The simulation framework used in this dissertation models the injected semiconductor laser through coupled rate equations for the complex intracavity field and carrier number. The injected optical field represents the remotely delivered source laser. By sweeping the injection ratio and frequency detuning, the model produces two-dimensional locking maps that identify regions of stable phase and intensity behavior. These maps guide the choice of operating points for later modulation-transfer and system-level computations.
+\section{Frequency-Dependent Modulation Transfer}
 
-\section{Modulation Transfer and Sideband Suppression}
+After the carrier-level locking region is known, the next issue is whether modulation on the remote source leaks through the injection-locked laser. This is tested by driving the remote injection field with controlled amplitude modulation and phase modulation. The resulting injected-laser field is decomposed into amplitude and phase response channels. This produces four transfer functions: amplitude-to-amplitude, amplitude-to-phase, phase-to-amplitude, and phase-to-phase.
 
-For remote coherent computing, the injected signal is not simply a continuous-wave carrier. It may carry amplitude or phase modulation from the remote source. The purpose of optical injection locking in this architecture is therefore not to copy the remote modulation onto the local laser. Instead, the goal is to recover a coherent local carrier while suppressing residual modulation transfer. The simulation framework evaluates this behavior by extracting amplitude-to-amplitude, amplitude-to-phase, phase-to-amplitude, and phase-to-phase transfer functions over modulation frequency, detuning, and injection ratio.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig3_full.png}
+    \caption{Frequency-dependent modulation-transfer analysis under injection locking. Amplitude and phase modulation on the remote laser are applied to the rate-equation model, and the corresponding amplitude and phase responses of the injected laser are extracted.}
+    \label{fig:simulation_transfer_functions}
+\end{figure}
 
-\section{Connection to Experimental Design}
+Figure~\ref{fig:simulation_transfer_functions} shows that the locked laser does not behave as an ideal static filter. Its response depends on modulation frequency, detuning, injection ratio, and the internal relaxation dynamics of the semiconductor laser. Near relaxation-oscillation frequencies, modulation transfer can be enhanced, and amplitude-phase mixing becomes more visible. This behavior is important for coherent computing because any residual modulation on the recovered carrier can interfere with the intended local data modulation.
 
-The theoretical model also motivates the experimental measurements used in the proposal-stage work. Locking range is measured by sweeping the source laser wavelength and observing the transition between free-running, partially locked, and locked states. Sidebands in the electrical spectrum are used as indicators of weak locking, nonlinear oscillation, or sideband-driven locking. This connection between model and experiment is central to selecting a practical injection ratio: stronger injection broadens the locking range, but it can also strengthen nonlinear sideband dynamics.
+\section{Injection Ratio and Detuning Trade-Offs}
+
+The simulations also show that injection ratio creates a direct trade-off. Stronger injection increases the detuning tolerance and can make carrier acquisition easier, but it also tends to increase residual modulation transfer and nonlinear sensitivity. Weaker injection narrows the locking range, yet it can produce a cleaner local carrier once locking is established.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig4_full.png}
+    \caption{Injection-ratio and detuning dependence of the modulation-transfer response. The results show the trade-off between wider locking margin at stronger injection and reduced residual modulation transfer at weaker injection.}
+    \label{fig:simulation_injection_tradeoff}
+\end{figure}
+
+Figure~\ref{fig:simulation_injection_tradeoff} makes this trade-off explicit. The operating point should not be chosen only by maximizing side-mode suppression or detuning margin. For computation, the quality of the recovered carrier matters. A carrier that is locked but strongly contaminated by remote modulation can degrade the interference result after remodulation and balanced detection. The preferred operating regime is therefore the lowest injection ratio that still maintains enough locking margin for the expected detuning and environmental drift.
+
+\section{Modulation Depth and Nonlinear Response}
+
+The theory paper further examines how modulation depth changes the injection-locked response. Small modulation depths mainly probe the linear transfer behavior. At larger modulation depths, especially for phase modulation, the response becomes more nonlinear. Waveform distortion and higher-order spectral components can appear near the relaxation-oscillation region.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig5_full.png}
+    \caption{Modulation-depth dependence of the injection-locked response. Larger modulation depths can produce waveform distortion, amplitude-phase mixing, and nonlinear spectral features, especially near relaxation-oscillation-enhanced regions.}
+    \label{fig:simulation_modulation_depth}
+\end{figure}
+
+Figure~\ref{fig:simulation_modulation_depth} supports the same design principle from another angle. Even when a laser is nominally locked, the modulation format and modulation depth determine whether the local carrier remains clean enough for coherent processing. Avoiding operating points that excite strong relaxation-oscillation response or nonlinear mixing is therefore part of the system design, not merely a detail of the laser model.
+
+\section{End-to-End Multiply-and-Accumulate Simulation}
+
+The final simulation connects the laser dynamics to the computational output. A remote data sequence modulates the source laser. Optical injection locking is used to recover a coherent local carrier. The recovered carrier is then remodulated with a second local data sequence, interfered with the original remote signal, detected using a balanced photodetection model, and temporally integrated.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig6_full.png}
+    \caption{End-to-end distributed coherent processing simulation. Symbol sequences are applied to the remote and local paths, the optical fields are interfered, and the balanced-detector output is integrated to form a running dot-product estimate.}
+    \label{fig:simulation_mac}
+\end{figure}
+
+Figure~\ref{fig:simulation_mac} shows how the carrier-level and modulation-transfer results appear at the computation level. When the injection ratio is reduced while locking is still maintained, the injected laser output more closely resembles an ideal clean local carrier. The balanced-detector output and temporal accumulation then approach the ideal no-injection baseline more closely. This result confirms that lower injection ratio can improve computational fidelity by suppressing residual remote modulation, provided that the available locking range remains sufficient for the system.
+
+\section{Summary of Simulation Design Guidelines}
+
+The simulation results lead to three practical guidelines for distributed coherent optical computing. First, injection locking can provide the mutual coherence required for remote interference-based computation, but the operating point must be selected using both phase stability and intensity stability. Second, stronger injection is not always better: it broadens the locking margin, but it can also increase modulation transfer and nonlinear laser response. Third, computation-level accuracy improves when the injected laser acts as a carrier-locked but modulation-isolated local oscillator. The preferred regime is therefore a low-injection operating point that still provides adequate detuning tolerance for the intended deployment environment.

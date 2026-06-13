@@ -1,48 +1,41 @@
-\chapter{Simulation and Experimental Results}
+\chapter{Experimental Validation and System Outlook}
 
-\section{Locking-Range Mapping}
+\section{Proposal-Stage Experimental Direction}
 
-The simulation results first map the locking region as a function of injection ratio and detuning. These maps confirm that increasing the injection ratio generally broadens the carrier-level locking interval. When amplitude-phase coupling is included, the locking region becomes asymmetric, especially at stronger injection. This behavior agrees with the design intuition developed in the proposal: higher injection strength improves detuning tolerance but can also introduce more complicated nonlinear dynamics near the locking boundary.
+The simulation study establishes the design rules for injection-locking-based distributed coherent processing. The proposal-stage experimental work provides the next step: validating these ideas using physical semiconductor lasers, optical modulators, optical spectrum measurements, and coherent interference measurements. The experiments are organized around three questions. First, can a local laser be reliably locked to a remote source carrier? Second, how does modulation on the source influence the locking process? Third, can the locked laser be used in a coherent interference system for optical-domain computation?
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.96\textwidth]{fig2_full.png}
-    \caption{Simulation-based locking-region mapping and architecture overview from the first paper. These results motivate the injection-ratio and detuning choices used for distributed coherent optical computing.}
-    \label{fig:sim_locking_maps}
-\end{figure}
+\section{Locking-Range Measurement}
 
-\section{Experimental Locking-Range Validation}
-
-The proposal-stage experiments validate the same locking-range picture using a tunable source laser, a local injected laser, an optical circulator, optical attenuation, and spectrum-domain measurements. In the unmodulated-source experiment, the source wavelength is swept through the target mode while the injected laser output is monitored. The locking range is identified from the region where the target mode dominates and the side-mode suppression ratio increases.
+The unmodulated-source experiment measures the baseline locking range of the local injected laser. A tunable source laser is attenuated to set the injection ratio and injected into the target laser through an optical circulator. The output is monitored in both the wavelength domain and the frequency domain. This measurement establishes where the target mode dominates and how the locking boundary shifts with injection ratio.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.84\textwidth]{nomodulation_setup.png}
-    \caption{Experimental setup for measuring injection-locking range with an unmodulated source laser. The electro-optic modulator is included to maintain the same optical path used in later modulated-source experiments.}
+    \caption{Experimental setup for measuring injection-locking range with an unmodulated source laser. The electro-optic modulator is retained in the path so that the optical layout remains consistent with the modulated-source experiment.}
     \label{fig:exp_nomod_setup}
 \end{figure}
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.72\textwidth]{LR_IR.png}
-    \caption{Proposal-stage locking-range measurement as a function of injection ratio. The results show broader locking ranges at higher injection ratios and asymmetric behavior between positive and negative detuning.}
+    \caption{Proposal-stage locking-range measurement as a function of injection ratio. The data show that the locking range broadens as injection ratio increases and that the locking boundary is asymmetric with detuning.}
     \label{fig:exp_lr_ir}
 \end{figure}
 
-\section{Modulated Injection and Sideband Dynamics}
+\section{Modulated Source Injection}
 
-The modulated-source experiments address a more realistic operating condition in which the remote source carries data. A driven electro-optic modulator creates sidebands around the optical carrier before injection into the local laser. As the source wavelength is swept, either the carrier or its sidebands can fall into the locking range. This introduces additional sideband dynamics and motivates the simulation-based transfer-function analysis.
+The modulated-source experiment introduces sidebands on the remote signal before injection. This is closer to the intended distributed computing use case, where the remote carrier carries data. As the carrier and its modulation sidebands sweep across the locking region, different spectral components can interact with the injected laser. The measurement therefore probes whether sidebands participate in locking or create unwanted nonlinear response.
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.84\textwidth]{modulation_setup.png}
-    \caption{Experimental setup for injection locking with a modulated source laser. The modulation sidebands can interact with the locking range and influence the local laser dynamics.}
+    \caption{Experimental setup for injection locking with a modulated source laser. Modulation sidebands around the carrier can influence the locking process when they enter or approach the locking range.}
     \label{fig:exp_mod_setup}
 \end{figure}
 
-\section{Coherent Interference and Computation}
+\section{Coherent Interference Experiment}
 
-After injection locking is established, the local locked laser can be remodulated and interfered with the remote signal. The proposal-stage coherent interference experiments use a balanced detection architecture and a phase-stabilization loop to maintain a controllable interference condition. These experiments provide the experimental pathway from carrier recovery toward optical-domain multiplication and accumulation.
+After carrier locking is established, the local laser can be remodulated and interfered with the retained remote branch. A balanced detection architecture extracts the interference cross term, while phase stabilization is used to hold the interferometer at a useful operating point. This experiment connects the laser-level locking measurements to the coherent-computing mechanism studied in simulation.
 
 \begin{figure}[t]
     \centering
@@ -57,3 +50,7 @@ After injection locking is established, the local locked laser can be remodulate
     \caption{Balanced-detection concept for extracting the interference cross term used in coherent optical computation.}
     \label{fig:exp_bpd}
 \end{figure}
+
+\section{Outlook}
+
+The experimental direction complements the simulation results by testing the same design trade-offs in a physical optical system. The eventual goal is to identify operating conditions where the local laser remains locked to the remote carrier, modulation leakage is low, and coherent interference is stable enough for analog optical computation. Future work will extend this validation to higher symbol rates, longer fiber links, polarization drift, amplified links, wavelength-division multiplexing, and integrated photonic implementations.
