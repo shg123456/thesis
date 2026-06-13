@@ -4,13 +4,6 @@
 
 The central problem addressed in this dissertation is not only how to compute with light, but how to compute coherently with optical signals that are generated at different physical locations. Conventional networked computing treats optical links mainly as communication channels. A received optical signal is converted to an electrical waveform, digitized, processed electronically, and then possibly converted back into the optical domain. This workflow is reliable, but it discards the phase relationship carried by the optical field and introduces conversion penalties at every interface.
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{comparison_conventional_vs_oil.png}
-    \caption{Comparison between conventional digital processing and the proposed injection-locking-based coherent optical processing architecture. In the conventional path, remote optical data are repeatedly converted between optical, electrical, analog, and digital domains. In the proposed path, the remote optical carrier is used to injection-lock a local laser, enabling coherent interference and balanced detection at the local processing node.}
-    \label{fig:comparison_conventional_oil}
-\end{figure}
-
 The proposed strategy is to preserve the useful optical phase reference across distance. A remotely modulated optical source is transmitted to a local processing node. Part of the received signal is used to injection-lock a local semiconductor laser, while another part is retained for later interference. The locked laser then acts as a local coherent carrier that can be independently remodulated with local data. Interference between the remote signal and the locally remodulated locked laser provides the physical multiplication mechanism required for coherent optical processing.
 
 \section{Background and Development of Injection Locking}
