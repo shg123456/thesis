@@ -1,3 +1,19 @@
 \chapter{Theory and Model}
 
-This chapter will present the semiconductor laser rate-equation model, locking-region criteria, and modulation-response extraction methods used in the simulations.
+\section{Injection Locking Range}
+
+Optical injection locking occurs when a local laser synchronizes its oscillation frequency and phase to an externally injected optical field. In the simplest oscillator picture, the locking range increases with the strength of the injected field and decreases with the quality factor of the free-running oscillator. For semiconductor lasers, this basic picture must be extended because the carrier density, optical gain, and refractive index are dynamically coupled.
+
+The linewidth enhancement factor links amplitude and phase dynamics, making the semiconductor-laser locking range asymmetric with respect to detuning. This asymmetry is important for the remote coherent computing architecture because practical operation requires both enough detuning tolerance for stable locking and enough spectral selectivity to reject modulation sidebands.
+
+\section{Rate-Equation Simulation Framework}
+
+The simulation framework used in this dissertation models the injected semiconductor laser through coupled rate equations for the complex intracavity field and carrier number. The injected optical field represents the remotely delivered source laser. By sweeping the injection ratio and frequency detuning, the model produces two-dimensional locking maps that identify regions of stable phase and intensity behavior. These maps guide the choice of operating points for later modulation-transfer and system-level computations.
+
+\section{Modulation Transfer and Sideband Suppression}
+
+For remote coherent computing, the injected signal is not simply a continuous-wave carrier. It may carry amplitude or phase modulation from the remote source. The purpose of optical injection locking in this architecture is therefore not to copy the remote modulation onto the local laser. Instead, the goal is to recover a coherent local carrier while suppressing residual modulation transfer. The simulation framework evaluates this behavior by extracting amplitude-to-amplitude, amplitude-to-phase, phase-to-amplitude, and phase-to-phase transfer functions over modulation frequency, detuning, and injection ratio.
+
+\section{Connection to Experimental Design}
+
+The theoretical model also motivates the experimental measurements used in the proposal-stage work. Locking range is measured by sweeping the source laser wavelength and observing the transition between free-running, partially locked, and locked states. Sidebands in the electrical spectrum are used as indicators of weak locking, nonlinear oscillation, or sideband-driven locking. This connection between model and experiment is central to selecting a practical injection ratio: stronger injection broadens the locking range, but it can also strengthen nonlinear sideband dynamics.

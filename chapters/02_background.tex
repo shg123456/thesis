@@ -1,3 +1,58 @@
 \chapter{Background}
 
-This chapter will review photonic computing, coherent optical multiply-and-accumulate operations, optical injection locking, and semiconductor laser dynamics.
+\section{Coherent and Incoherent Photonic Computing}
+
+Photonic neural-network architectures are commonly categorized as incoherent or coherent, depending on whether optical phase is used during encoding and computation. Incoherent systems operate primarily on optical intensity. They are comparatively tolerant to environmental perturbations because computation is performed through power summation rather than phase-sensitive interference. This makes incoherent designs attractive for robust photonic signal processing, but it also restricts the available signal representation. In many cases, the optical signal naturally represents non-negative real-valued quantities, and signed or complex-valued operations require additional routing, balancing, or encoding overhead.
+
+Coherent systems retain both amplitude and phase. When two coherent fields interfere, the detected signal contains a cross term proportional to the product of the fields, making coherent photonics especially attractive for dot products, matrix operations, and complex-valued computing. The benefit is also the central difficulty: the optical paths participating in the computation must maintain a stable phase relationship. On a single chip this is often handled by splitting one laser into many paths. For remote data streams generated at different locations, the same assumption no longer holds.
+
+\section{Conventional Remote-Coherence Strategies}
+
+At the proposal stage, two intuitive approaches were considered for remote coherent optical interference. In the first, a carrier laser is split at one data center, with one branch modulated locally and the other transmitted to a remote site for modulation before the two branches are interfered. Although both branches originate from one laser, the physically separated paths are sensitive to differential path-length drift caused by temperature changes, vibration, and fiber perturbations.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{schematic-tradition1.png}
+    \caption{Conventional remote-coherence approach based on splitting one carrier and sending one branch to a remote location. This approach requires tight path-length and phase stabilization.}
+    \label{fig:proposal_traditional_split}
+\end{figure}
+
+In the second approach, an independent coherent laser is deployed at the remote site. This reduces the need to transmit a copy of the carrier, but the two lasers do not naturally share a stable phase or frequency reference. Meaningful interference therefore requires a tight locking mechanism, such as an optical phase-locked loop or an external shared frequency reference. These methods can achieve excellent stability, but they require complex feedback electronics, low-latency control, and carefully managed optical references.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{schematic-tradition2.png}
+    \caption{Conventional remote-coherence approach based on an independent remote laser. The independent laser must be tightly frequency- and phase-locked to the received optical signal before coherent interference can be used for computation.}
+    \label{fig:proposal_traditional_independent}
+\end{figure}
+
+\section{Injection-Locking-Based Remote Coherence}
+
+Optical injection locking provides a simpler route to remote coherence. A source laser from one location is delivered to a remote site and injected into a local semiconductor laser. When the frequency detuning and injection ratio fall within the locking range, the local laser synchronizes to the incoming optical field. The locked laser can then serve as a coherent local carrier that is remodulated and interfered with the retained remote signal.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{schematic.png}
+    \caption{Proposal-stage system schematic for remote coherent optical computing through optical injection locking. A modulated source signal is sent to a remote site, where one branch injection-locks a local laser and another branch is retained for coherent interference.}
+    \label{fig:proposal_oil_system}
+\end{figure}
+
+The key design requirement is spectral selectivity. The optical carrier should fall within the target mode's locking range, while modulation sidebands should ideally remain outside that range. If a sideband enters or approaches the locking range, it can compete with the carrier and alter the dynamics of the locked laser. This motivates the locking-range, sideband-transfer, and modulation-leakage studies developed in the following chapters.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.78\textwidth]{sch.png}
+    \caption{Conceptual locking condition from the proposal: the carrier should reside within the target-mode locking range, while modulation sidebands should be kept outside the locking range to avoid unwanted sideband-driven dynamics.}
+    \label{fig:proposal_locking_condition}
+\end{figure}
+
+\section{Toward Chip-Scale Implementation}
+
+The same concept can be translated toward an integrated photonic platform. In the proposal architecture, source modulation, injection locking, phase stabilization, local remodulation, and balanced detection are arranged so that low-frequency interference can be used for path stabilization while high-frequency interference provides the computational readout.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{schematic-chip.png}
+    \caption{Proposal-stage chip-scale architecture for injection-locking-based coherent optical processing. The design combines carrier recovery, phase stabilization, local remodulation, and balanced detection.}
+    \label{fig:proposal_chip_architecture}
+\end{figure}
