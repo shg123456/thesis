@@ -12,19 +12,12 @@ At the proposal stage, two intuitive approaches were considered for remote coher
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.92\textwidth]{schematic-tradition1.png}
-    \caption{Conventional remote-coherence approach based on splitting one carrier and sending one branch to a remote location. This approach requires tight path-length and phase stabilization.}
-    \label{fig:proposal_traditional_split}
+    \includegraphics[width=0.95\textwidth]{fig1a_conventional_digital.png}
+    \caption{Conventional digital processing approach for networked optical data. Remote optical information is repeatedly converted between optical, electrical, analog, and digital domains before further transmission or computation.}
+    \label{fig:theory_conventional_digital}
 \end{figure}
 
-In the second approach, an independent coherent laser is deployed at the remote site. This reduces the need to transmit a copy of the carrier, but the two lasers do not naturally share a stable phase or frequency reference. Meaningful interference therefore requires a tight locking mechanism, such as an optical phase-locked loop or an external shared frequency reference. These methods can achieve excellent stability, but they require complex feedback electronics, low-latency control, and carefully managed optical references.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.92\textwidth]{schematic-tradition2.png}
-    \caption{Conventional remote-coherence approach based on an independent remote laser. The independent laser must be tightly frequency- and phase-locked to the received optical signal before coherent interference can be used for computation.}
-    \label{fig:proposal_traditional_independent}
-\end{figure}
+In a second approach, an independent coherent laser is deployed at the remote site. This reduces the need to transmit a copy of the carrier, but the two lasers do not naturally share a stable phase or frequency reference. Meaningful interference therefore requires a tight locking mechanism, such as an optical phase-locked loop or an external shared frequency reference. These methods can achieve excellent stability, but they require complex feedback electronics, low-latency control, and carefully managed optical references.
 
 \section{Injection-Locking-Based Remote Coherence}
 
@@ -32,18 +25,18 @@ Optical injection locking provides a simpler route to remote coherence. A source
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.92\textwidth]{schematic.png}
-    \caption{Proposal-stage system schematic for remote coherent optical computing through optical injection locking. A modulated source signal is sent to a remote site, where one branch injection-locks a local laser and another branch is retained for coherent interference.}
-    \label{fig:proposal_oil_system}
+    \includegraphics[width=0.95\textwidth]{fig1d_coherent_setup.png}
+    \caption{Injection-locking-based coherent optical processing setup. The remote source carries data over fiber, while optical injection locking provides a coherent local carrier for remodulation and interference-based computation.}
+    \label{fig:theory_coherent_setup}
 \end{figure}
 
 The key design requirement is spectral selectivity. The optical carrier should fall within the target mode's locking range, while modulation sidebands should ideally remain outside that range. If a sideband enters or approaches the locking range, it can compete with the carrier and alter the dynamics of the locked laser. This motivates the locking-range, sideband-transfer, and modulation-leakage studies developed in the following chapters.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.78\textwidth]{sch.png}
-    \caption{Conceptual locking condition from the proposal: the carrier should reside within the target-mode locking range, while modulation sidebands should be kept outside the locking range to avoid unwanted sideband-driven dynamics.}
-    \label{fig:proposal_locking_condition}
+    \includegraphics[width=0.86\textwidth]{fig1c_oil_concept.png}
+    \caption{Optical injection locking concept. The remote carrier should lock the injected laser while modulation sidebands are suppressed outside the effective locking window; the locking range increases with injection ratio.}
+    \label{fig:theory_oil_concept}
 \end{figure}
 
 \section{Toward Chip-Scale Implementation}
@@ -52,7 +45,7 @@ The same concept can be translated toward an integrated photonic platform. In th
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.92\textwidth]{schematic-chip.png}
-    \caption{Proposal-stage chip-scale architecture for injection-locking-based coherent optical processing. The design combines carrier recovery, phase stabilization, local remodulation, and balanced detection.}
-    \label{fig:proposal_chip_architecture}
+    \includegraphics[width=0.95\textwidth]{fig1e_distributed_architecture.png}
+    \caption{Distributed coherent optical computing architecture in which a remote source can fan out to multiple injection-locked processing nodes. Each node recovers a coherent local carrier and performs local photonic processing.}
+    \label{fig:theory_distributed_architecture}
 \end{figure}
