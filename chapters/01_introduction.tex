@@ -1,0 +1,49 @@
+\chapter{Introduction}
+
+\section{Motivation}
+
+The rapid growth of machine learning, scientific simulation, and data-centric workloads has placed sustained pressure on modern computing systems. Many of these workloads are built from repeated linear-algebra operations, especially dot products, matrix-vector multiplication, and matrix-matrix multiplication. Digital processors have continued to improve, but the throughput and energy cost of moving data between memory, processors, and networked compute nodes has become a central limitation. As a result, there is increasing interest in computing approaches that map selected mathematical operations directly onto physical dynamics rather than executing every multiply-and-accumulate operation through conventional digital logic.
+
+Photonics is a natural candidate for this role because optical fields can propagate with high bandwidth, low latency, and large parallelism. Integrated photonic systems have already been explored for programmable linear optics, optical neural networks, photonic tensor cores, and neuromorphic photonic processors \cite{bogaerts2020programmable,shen2017deep,feldmann2021parallel,tait2017neuromorphic,hamerly2019large}. These systems exploit interference, wavelength multiplexing, and optical fanout to perform useful mathematical transformations before the result is converted back into the electrical domain. In this sense, photonic processors are not intended to replace all digital computation. Instead, they are attractive as accelerators for operations where the physics of light naturally performs the required operation.
+
+This advantage becomes especially important in networked computing environments. Modern computing systems often rely on optical links to move information between digital processors, yet the computation itself usually remains electronic. A conventional distributed workflow therefore requires a remote optical signal to be detected, converted to an electrical waveform, digitized, buffered, processed, and then potentially converted back into the optical domain. This sequence introduces optical-to-electrical conversion, analog-to-digital conversion, buffering, and clocking overheads. These penalties are illustrated conceptually in Fig.~\ref{fig:conventional_setup}. They limit the possibility of real-time distributed optical processing, particularly when the desired computation could in principle be carried out directly on the optical waveform.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.95\textwidth]{conventional-way.png}
+    \caption{Conceptual illustration of a conventional distributed computing workflow in which optical communication links are terminated by optical-to-electrical and analog-to-digital conversion before digital processing. This figure motivates the need for optical-domain processing between distributed nodes.}
+    \label{fig:conventional_setup}
+\end{figure}
+
+\section{From Incoherent to Coherent Optical Processing}
+
+Incoherent optical processing can already operate on remotely delivered optical intensity. Because it does not require a stable optical phase reference, it is comparatively easy to distribute across links. However, intensity-only processing restricts the encoding space. The optical signal usually represents positive real-valued quantities, and the number of independent degrees of freedom is limited by available physical channels such as wavelength, mode, and polarization. Balanced detection and routing can extend the range to signed real-valued outputs, but the computation remains fundamentally tied to intensity operations.
+
+Coherent photonic computing provides a richer alternative. When two mutually coherent optical fields interfere, the detected signal contains a cross term proportional to the product of the fields. This property enables optical implementations of dot products and multiply-and-accumulate operations and can support signed, phase-sensitive, or complex-valued encodings \cite{shen2017deep,hamerly2019large,chen2023deep,rahimi2024realization}. Coherent architectures are therefore attractive for photonic accelerators that seek to process both amplitude and phase, not only optical power.
+
+The same phase sensitivity that makes coherent computing powerful also creates its central scaling challenge. Interference-based computation requires the participating optical paths to maintain a stable mutual phase reference during the computation. On a single chip, this is usually achieved by splitting one laser source into many paths. Across spatially separated processors, however, separate lasers do not naturally maintain a fixed phase relationship, and environmental perturbations in fiber links introduce additional phase drift. As a result, many coherent photonic processors are naturally organized as local single-source systems, while truly distributed coherent processing remains difficult.
+
+\section{Optical Injection Locking as a Distributed Coherence Mechanism}
+
+Optical injection locking offers a route to bridge this gap. In optical injection locking, light from a remote master laser is injected into a local slave laser. When the frequency detuning and injection strength fall within the locking range, the local laser locks to the phase and frequency of the remote source \cite{lang1982injection,mogensen1985locking,liu2020optical}. This mechanism has been widely studied in semiconductor lasers and has been used for coherent communication, carrier recovery, modulation transfer, and laser dynamics control \cite{liu2015homodyne,lau2009enhanced}.
+
+For distributed coherent photonic computing, the desired use of injection locking is distinct from many communication-oriented systems. In communication links, one may want the locked laser to preserve or enhance modulation transfer. In the architecture studied in this dissertation, the purpose is different: the local laser should recover a clean optical carrier that remains coherent with the remote source while suppressing the remote data modulation. The recovered carrier can then be remodulated locally and interfered with the original remote signal to perform coherent optical multiplication. This concept is summarized in Fig.~\ref{fig:proposed_architecture}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\textwidth]{fig2.png}
+    \caption{Overview of the injection-locking approach investigated in this dissertation. Optical injection locking can generate a coherent local carrier reference from a remote optical source, enabling downstream coherent processing while reducing unnecessary conversion between optical, electrical, and digital domains.}
+    \label{fig:proposed_architecture}
+\end{figure}
+
+The key design question is therefore not only whether locking occurs, but whether the locked local laser is useful as a coherent and modulation-isolated carrier for computation. Stronger injection generally broadens the locking range and improves detuning tolerance. However, stronger injection can also increase the transfer of remote modulation into the injected laser output, especially near relaxation-oscillation features in semiconductor laser dynamics. Weaker injection can produce a cleaner local carrier with less residual modulation, but the locking range becomes narrower. This trade-off motivates the theoretical and simulation-based work in this dissertation.
+
+\section{Scope of This Dissertation}
+
+This dissertation develops a theoretical framework for distributed coherent optical computing based on injection-locked photonic networks. The first part of the work formulates the rate-equation model used to describe semiconductor laser injection locking. The model captures the evolution of the injected laser field and carrier population, including amplitude-phase coupling through the linewidth enhancement factor. Using this framework, the locking region is mapped as a function of injection ratio, frequency detuning, and laser parameters.
+
+The second part of the work examines modulation transfer under injection locking. Because the remote optical source carries data, it is necessary to determine how much of that modulation leaks into the locked local laser. Frequency-dependent transfer functions are extracted for amplitude-modulated and phase-modulated remote injection. These simulations identify the operating regimes where injection locking provides a stable carrier reference while suppressing unwanted remote modulation components.
+
+The final part of the work evaluates end-to-end photoelectric multiply-and-accumulate operations. Symbol sequences are applied to the remote and local optical paths, the fields are interfered using a balanced-detection model, and the detected signal is temporally integrated to estimate dot-product accuracy. These simulations connect laser-level locking behavior to computation-level fidelity and show how injection ratio affects the accuracy of distributed coherent processing.
+
+The remainder of the dissertation is organized as follows. Chapter~2 reviews the background of photonic computing, coherent optical processing, and optical injection locking. Chapter~3 presents the semiconductor laser rate-equation model and the numerical procedures used for locking-region and modulation-transfer analysis. Chapter~4 reports simulation results for locking maps, transfer functions, and symbol-level multiply-and-accumulate operations. Chapter~5 summarizes the main design guidelines and discusses future directions toward experimental validation and scalable distributed coherent photonic accelerators.

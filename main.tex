@@ -1,0 +1,68 @@
+\documentclass[hidelinks,pdftex,phd,11pt]{pittetd}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage{pdflscape}
+\usepackage{booktabs}
+\usepackage{siunitx}
+
+\graphicspath{{images/}{images/paper1/}{images/conventional/}}
+\hypersetup{hidelinks}
+
+\patch{amsmath}
+\patch{amsthm}
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{[#1]\hfill}
+\makeatother
+
+\title[Distributed Coherent Optical Computing]{Distributed Coherent Optical Computing via Injection-Locked Photonic Networks}
+\author{Shenghan Gao}
+\degree{B.S., Previous Institution, Year}
+\school{Department of Electrical and Computer Engineering}
+\date{July 2026}
+\year{2026}
+\keywords{coherent photonic computing, optical injection locking, distributed computing, semiconductor lasers, optical neural networks}
+\subject{Dissertation}
+
+\raggedbottom
+
+\begin{document}
+\maketitle
+
+\committeemember{Nathan Youngblood, Department of Electrical and Computer Engineering}
+\committeemember{Committee Member, Departmental Affiliation}
+\committeemember{Committee Member, Departmental Affiliation}
+\committeemember{Committee Member, Departmental Affiliation}
+\school{Department of Electrical and Computer Engineering}
+\makecommittee
+
+\copyrightpage
+
+\begin{abstract}
+\input{frontmatter/abstract}
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+% \listoftables
+
+\phantomsection
+\preface
+\input{frontmatter/preface}
+
+\input{chapters/01_introduction}
+\input{chapters/02_background}
+\input{chapters/03_theory_and_model}
+\input{chapters/04_simulation_results}
+\input{chapters/05_conclusion}
+
+\appendix
+\input{chapters/appendix_a}
+
+\bibliographystyle{plain}
+\safebibliography{references}
+
+\end{document}
