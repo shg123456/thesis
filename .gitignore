@@ -21,6 +21,8 @@ main.pdf
 *.tmp
 .DS_Store
 Thumbs.db
+*.blend
+*.blend1
 
 # Local source material used to draft the thesis.
 theorem-paper/

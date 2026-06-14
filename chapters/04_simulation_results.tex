@@ -34,12 +34,12 @@ The modulated setup in Fig.~\ref{fig:fiber_modulated_setup} keeps the same injec
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=\textwidth]{fiber_experiment_neg15_summary.png}
-    \caption{Fiber experimental measurements at -15~dB injection ratio. Panels (a) and (b) show the unmodulated-source spectrum and RF response versus detuning. Panels (c) and (d) show the corresponding modulated-source measurements. The modulated case introduces additional sideband-related response while retaining the carrier-locking structure.}
+    \includegraphics[width=\textwidth]{fiber_experiment_simulation_comparison.png}
+    \caption{Comparison between fiber measurements and matched simulations. Panels (a) and (b) show the unmodulated-source experimental optical spectrum and RF response at -15~dB injection ratio. Panel (c) shows the corresponding unmodulated simulation at -40~dB injection ratio with $\alpha=2$ and threshold 1.944. Panels (d) and (e) show the modulated-source experimental spectrum and RF response, and panel (f) shows the matched AM-to-AM modulation-transfer simulation.}
     \label{fig:fiber_experiment_neg15_summary}
 \end{figure}
 
-Figure~\ref{fig:fiber_experiment_neg15_summary} compares the unmodulated and modulated fiber measurements. In the unmodulated case, the dominant features follow the expected detuning-dependent locking boundary. In the modulated case, additional spectral and RF structures appear because the injected field contains modulation sidebands. These features are consistent with the simulation result that the injected laser can remain carrier locked while still exhibiting residual modulation transfer near sensitive detuning and modulation-frequency regions.
+Figure~\ref{fig:fiber_experiment_neg15_summary} compares the unmodulated and modulated fiber measurements with the matched simulation results. The experimental -15~dB condition is not treated as numerically identical to the simulated -40~dB condition; instead, the simulation is fitted through the calibrated model parameters $\alpha=2$ and threshold 1.944, which correspond to the injected-laser operating point near 0~dBm. Under this matching, the unmodulated experiment and simulation show the same qualitative structure: a detuning-dependent locking boundary, strong residual oscillation features outside the stable region, and a lower-response region near the locked carrier. In the modulated case, the experiment shows additional RF and spectral features created by the injected sidebands, while the AM-to-AM simulation reproduces the same trend by showing strong modulation transfer near sensitive detuning branches and weaker transfer in the stable locked region. This agreement supports the use of the rate-equation model as a design tool for selecting operating points that preserve carrier locking while suppressing unwanted modulation transfer.
 
 \section{Comparison with the Simulation Model}
 
