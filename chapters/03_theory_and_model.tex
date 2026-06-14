@@ -20,18 +20,18 @@ The supplementary simulations show that the locking map also depends on the oper
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{combined_2D_locking_regions_115.png}
-    \caption{Supplementary two-dimensional locking-region map for threshold 1.15. The red locking boundary is obtained from the phase and intensity stability criteria and is overlaid on the relative intensity swing map for different linewidth enhancement factors.}
+    \caption{Supplementary two-dimensional locking-region map for threshold 1.15. The red locking boundary is obtained from the empirical phase and intensity stability criteria, $\Delta I/\bar{I}\leq0.10$ and $\Delta\phi\leq0.10$ rad, and is overlaid on the relative intensity swing map for different linewidth enhancement factors.}
     \label{fig:threshold_115_locking_region}
 \end{figure}
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{combined_2D_locking_regions_194.png}
-    \caption{Supplementary two-dimensional locking-region map for threshold 1.944. Compared with Fig.~\ref{fig:threshold_115_locking_region}, the phase- and intensity-defined locking boundary shifts across $\alpha$, confirming that the effective threshold changes the available stable operating region.}
+    \caption{Supplementary two-dimensional locking-region map for threshold 1.944. Compared with Fig.~\ref{fig:threshold_115_locking_region}, the phase- and intensity-defined locking boundary shifts across $\alpha$, confirming that the injected-laser operating condition changes the available stable operating region.}
     \label{fig:threshold_194_locking_region}
 \end{figure}
 
-Figures~\ref{fig:threshold_115_locking_region} and~\ref{fig:threshold_194_locking_region} illustrate why threshold must be treated as an experimental matching parameter rather than a purely numerical detail. Changing the threshold alters both the residual intensity response and the phase-stable detuning range over which the field behaves as a clean locked carrier. The threshold 1.944 case is therefore used in the experimental comparison because it corresponds to the 0~dBm injected-laser operating condition used in the fiber measurements.
+Figures~\ref{fig:threshold_115_locking_region} and~\ref{fig:threshold_194_locking_region} illustrate why threshold must be treated as an experimental matching parameter rather than a purely numerical detail. The supplementary analysis defines a conservative practical locking window by requiring both low relative intensity swing and small residual phase excursion. Changing the threshold or pump-normalized operating point alters both the residual intensity response and the phase-stable detuning range over which the field behaves as a clean locked carrier. The threshold 1.944 case is therefore used in the experimental comparison because it corresponds to the 0~dBm injected-laser operating condition used in the fiber measurements.
 
 \section{Frequency-Dependent Modulation Transfer}
 
@@ -71,6 +71,15 @@ The theory paper further examines how modulation depth changes the injection-loc
 \end{figure}
 
 Figure~\ref{fig:simulation_modulation_depth} supports the same design principle from another angle. Even when a laser is nominally locked, the modulation format and modulation depth determine whether the local carrier remains clean enough for coherent processing. Avoiding operating points that excite strong relaxation-oscillation response or nonlinear mixing is therefore part of the system design, not merely a detail of the laser model.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{combined_AM_PM_modulation_sweep.png}
+    \caption{Supplementary time-domain AM and PM modulation sweep at $\alpha=5$, $R_{\mathrm{inj}}=-50$~dB, zero detuning, and $f_{\mathrm{mod}}=2$~GHz. The AM-driven traces define the AM-to-AM and AM-to-PM response channels, while the PM-driven traces define the PM-to-AM and PM-to-PM response channels used for FFT-based modulation-response extraction.}
+    \label{fig:am_pm_modulation_sweep}
+\end{figure}
+
+Figure~\ref{fig:am_pm_modulation_sweep} makes the four modulation-response channels explicit in the time domain. The AM input mainly scales the injected-laser amplitude response and also produces a phase response through amplitude-phase coupling. The PM input produces both phase and amplitude responses, and at large phase-modulation depth the waveform shape changes rather than simply scaling with modulation depth. This behavior explains why the transfer-function maps must be interpreted as a local operating-point response rather than as a globally linear modulation filter.
 
 \section{End-to-End Multiply-and-Accumulate Simulation}
 
