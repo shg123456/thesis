@@ -51,12 +51,38 @@ The threshold comparisons in Figs.~\ref{fig:threshold_115_locking_region} and~\r
 
 After carrier locking is established, the recovered local carrier can be remodulated and interfered with a retained branch of the remote signal. The fiber interference setup is the experimental bridge between laser-level locking measurements and coherent optical computation. It uses the injection-locked laser as the local coherent source and balanced detection to extract the interference term.
 
+In this interference experiment, phase drift in the fiber paths must be actively controlled. The retained remote branch and the remodulated local branch interfere at the output splitter, and the detected interference signal depends on their relative optical phase. Environmental drift, fiber motion, and thermal fluctuations can move the interferometer away from the desired operating point. A PID feedback loop is therefore used to stabilize the phase by driving a fiber stretcher in one arm of the interferometer.
+
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{fiber_interference_setup.png}
     \caption{Fiber coherent-interference setup using an injection-locked local laser and a retained branch of the remote source signal. This setup is the final fiber-stage validation before moving to chip-scale implementations.}
     \label{fig:fiber_interference_setup}
 \end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{PID-setup.png}
+    \caption{PID phase-control loop used to stabilize the fiber interference experiment. A photodetector monitors the interference output, the lock-in amplifier compares the measured signal with the reference signal, and the PID controller generates a correction voltage. The correction is combined with the RF drive through a bias tee and applied to the fiber stretcher, which adjusts the optical path length and holds the interferometer near the desired phase point.}
+    \label{fig:pid_phase_control_setup}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{without-PID.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{witth-pid.png}
+    \end{minipage}
+    \caption{Measured interference signal without and with PID phase control. Without feedback, the photodetector signal drifts relative to the reference because the interferometer phase is not held fixed. With PID control enabled, the detected signal remains phase-stabilized relative to the reference, allowing the interference measurement to be used for coherent optical processing.}
+    \label{fig:pid_with_without_comparison}
+\end{figure}
+
+Figures~\ref{fig:pid_phase_control_setup} and~\ref{fig:pid_with_without_comparison} show the phase-stabilization method used for the fiber interference measurement. The lock-in amplifier extracts the error signal relative to the modulation reference, and the PID controller feeds back to the fiber stretcher. This feedback suppresses slow phase drift and keeps the interference output near a controlled operating point, which is necessary for repeatable coherent multiplication and balanced-detection measurements.
 
 \section{Summary}
 
