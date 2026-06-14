@@ -13,6 +13,22 @@ The fiber experiments validate the basic optical injection-locking and coherent-
 
 Figure~\ref{fig:onchip_setup_concept} shows the planned chip-scale direction. In this implementation, the injected laser, optical routing, modulation stage, interferometric combiner, and detection path are treated as parts of one integrated coherent processing node. The goal is not only to shrink the experiment, but also to make the relative phase and polarization state more stable than in a long fiber setup.
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.7\textwidth]{chip-design.png}
+    \caption{Photonic chip design used for the chip-scale implementation. The layout includes grating-coupler access, waveguide routing, splitting/combining structures, and interferometric paths intended to reproduce the key optical functions of the fiber setup on an integrated platform.}
+    \label{fig:chip_design}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.58\textwidth]{chip-microscope.png}
+    \caption{Microscope image of the fabricated chip region corresponding to the design in Fig.~\ref{fig:chip_design}. The image shows the realized waveguide routing and coupler structures that will be used for chip-scale coherent interference experiments.}
+    \label{fig:chip_microscope}
+\end{figure}
+
+Figures~\ref{fig:chip_design} and~\ref{fig:chip_microscope} show the transition from layout to fabricated device. The design image is useful for identifying the intended optical paths and functional blocks, while the microscope image confirms the physical routing and device geometry on the fabricated sample. These chip-level structures provide the basis for replacing fiber splitters, combiners, and long free fiber paths with a more compact and stable integrated optical circuit.
+
 \section{Distributed Coherent Processing Concept}
 
 The long-term system target is a distributed architecture in which a remote optical signal carries data to one or more local processing nodes. Each node recovers coherence through optical injection locking, remodulates a local carrier, and performs interference-based computation with the retained remote signal. This approach avoids transmitting a separate high-power local oscillator to every processing node while preserving the phase reference needed for coherent detection.

@@ -4,9 +4,13 @@
 
 The fiber experiment tests whether the injection-locking behavior predicted by the rate-equation simulations appears in a physical optical link. The key comparison in this chapter uses an experimental injection ratio of -15~dB and compares it with the -40~dB simulation condition from Chapter~3. The difference between these numerical values reflects the parameter matching between the experimental laser powers and the normalized simulation model; throughout this comparison the simulation uses $\alpha=2$ and threshold 1.944, corresponding to the injected-laser output near 0~dBm.
 
+The measurements are organized as a sequence of increasingly system-relevant tests. First, an unmodulated source laser is used to measure the baseline optical injection-locking response and to identify the locking boundary as the laser detuning is swept. Second, an electro-optic modulator is inserted in the source path so that the remote carrier carries sidebands before injection. This modulated-source case tests whether the locked laser behaves as a clean carrier recovery element or whether source modulation is transferred into the local laser output. Finally, the locked carrier is used in a coherent fiber interference setup, which connects the laser-level locking measurement to the optical multiplication mechanism required for distributed coherent processing.
+
 \section{Unmodulated Source Injection}
 
 The unmodulated experiment measures the baseline carrier-locking behavior. A tunable source laser is injected into the target laser through a fiber-based injection path, and the injected laser output is monitored while the detuning is swept. This measurement establishes the locking range and identifies the residual RF features that remain after the carrier is locked.
+
+Figure~\ref{fig:fiber_unmodulated_setup} shows the unmodulated injection-locking setup. The source laser provides the master optical field. A polarization controller (PC1) aligns the input polarization, and a variable optical attenuator (VOA) sets the injection ratio before the signal enters the optical circulator. The injected laser is connected to another port of the circulator through PC2, which controls the polarization of the injected field at the laser input. The circulator routes the injection signal into the laser while directing the laser output toward the measurement path. PC3 is used to optimize the output polarization before a 50/50 splitter sends the signal to the optical spectrum analyzer (OSA) and to a photodetector (PD). The OSA records the optical spectrum during the detuning sweep, while the PD and spectrum/vector analyzer (SVA) measure the RF response of residual intensity oscillations.
 
 \begin{figure}[t]
     \centering
@@ -18,6 +22,8 @@ The unmodulated experiment measures the baseline carrier-locking behavior. A tun
 \section{Modulated Source Injection}
 
 The modulated-source experiment adds data-like sidebands to the source before injection. This configuration is closer to the intended distributed coherent computing system, where the remote optical carrier also carries information. The measurement probes whether the injected laser locks primarily to the carrier or whether source modulation leaks into the recovered local carrier.
+
+The modulated setup in Fig.~\ref{fig:fiber_modulated_setup} keeps the same injection and monitoring path as the unmodulated measurement, but adds an electro-optic modulator (EOM1) after the source laser. Waveform generator WG1 drives the modulator and sets the modulation format and depth. PC1 before the EOM adjusts the source polarization for efficient modulation, and the VOA after the modulated path again controls the injection ratio. After the circulator, PC3, splitter, PD, OSA, and SVA play the same roles as in the unmodulated experiment. This matched layout is important because changes between the two measurements can then be attributed primarily to the presence of source modulation rather than to a different optical path.
 
 \begin{figure}[t]
     \centering
