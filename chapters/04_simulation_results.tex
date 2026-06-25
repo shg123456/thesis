@@ -34,12 +34,114 @@ The modulated setup in Fig.~\ref{fig:fiber_modulated_setup} keeps the same injec
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=\textwidth]{fiber_experiment_simulation_comparison.png}
-    \caption{Comparison between fiber measurements and matched simulations. Panels (a) and (b) show the unmodulated-source experimental optical spectrum and RF response at -15~dB injection ratio. Panel (c) shows the corresponding unmodulated simulation at -40~dB injection ratio with $\alpha=2$ and threshold 1.944. Panels (d) and (e) show the reference-subtracted modulated-source experimental spectrum and RF response, and panel (f) shows the matched AM-to-AM modulation-transfer simulation.}
+    \includegraphics[width=\textwidth]{simulation_experiment_comparison_heatmaps.png}
+    \caption{Simulation and experiment comparison heatmaps. The figure compares optical injection-locking behavior in the unmodulated and modulated cases. The first row shows the unmodulated case: panel (a) is the simulated RF FFT spectrum of the injected/slave laser output intensity, and panel (b) is the injected-laser RF spectrum measured experimentally using the SVA spectrum mode. The second row shows the modulated case: panel (c) is the simulated AM-to-AM transfer function, and panel (d) is the experimental AM-to-AM transfer function measured in VNA mode after reference subtraction and optical-power normalization. All heat maps use RF modulation frequency on the horizontal axis, optical detuning on the vertical axis, and a common color scale from -60~dB to -10~dB.}
     \label{fig:fiber_experiment_neg15_summary}
 \end{figure}
 
-Figure~\ref{fig:fiber_experiment_neg15_summary} compares the unmodulated and modulated fiber measurements with the matched simulation results. The experimental -15~dB condition is not treated as numerically identical to the simulated -40~dB condition; instead, the simulation is fitted through the calibrated model parameters $\alpha=2$ and threshold 1.944, which correspond to the injected-laser operating point near 0~dBm. Under this matching, the unmodulated experiment and simulation show the same qualitative structure: a detuning-dependent locking boundary, strong residual oscillation features outside the stable region, and a lower-response region near the locked carrier. In the modulated case, the reference-subtracted experimental maps isolate the sideband-induced response from the background source-laser contribution, showing additional RF and spectral features created by the injected modulation. The AM-to-AM simulation reproduces the same trend by showing strong modulation transfer near sensitive detuning branches and weaker transfer in the stable locked region. This agreement supports the use of the rate-equation model as a design tool for selecting operating points that preserve carrier locking while suppressing unwanted modulation transfer.
+Figure~\ref{fig:fiber_experiment_neg15_summary} compares the unmodulated and modulated fiber measurements with the matched simulation results. The experimental -15~dB condition is not treated as numerically identical to the simulated -40~dB condition; instead, the simulation is fitted through the calibrated model parameters $\alpha=2$ and threshold 1.944, which correspond to the injected-laser operating point near 0~dBm. Under this matching, the unmodulated experiment and simulation show the same qualitative structure: a detuning-dependent locking boundary, strong residual oscillation features outside the stable region, and a lower-response region near the locked carrier. In the modulated case, the reference-subtracted and power-normalized experimental map isolates the sideband-induced response from the background source-laser contribution. The AM-to-AM simulation reproduces the same trend by showing strong modulation transfer near sensitive detuning branches and weaker transfer in the stable locked region.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{injection_ratio_sweep_transfer_function.png}
+    \caption{Injection-ratio sweep transfer function. The figure compares the AM-to-AM transfer function at different injection ratios. The left panel shows the simulation transfer function extracted at detuning 0~GHz for injection ratios of -35, -40, -45, -50, and -55~dB. The right panel shows the experimental VNA-measured AM-to-AM response extracted at detuning +0.037420~GHz for injection ratios of -10, -15, -20, -25, and -30~dB. The experimental data are processed using source-modulation reference subtraction and optical-power normalization so that they correspond to the AM-to-AM transfer function defined in the simulation.}
+    \label{fig:injection_ratio_sweep_transfer_function}
+\end{figure}
+
+\section{Experimental Processing Method}
+
+In the modulated experiment, the VNA response is measured through the same photodetector and RF chain. For each injection ratio, the response at the injected/slave laser output is first measured and denoted as $S_{21,\mathrm{slave}}(f)$. The reference response is measured after the source laser is modulated but before the signal enters the circulator and is injected into the slave laser; this reference is denoted as $S_{21,\mathrm{master}}(f)$. The experimental AM-to-AM transfer function is therefore processed as
+\[
+H_{\mathrm{AM}\rightarrow\mathrm{AM,exp,dB}}(f)
+=
+S_{21,\mathrm{slave}}(f)
+-
+S_{21,\mathrm{master}}(f)
+-
+20\log_{10}
+\left(
+\frac{P_{\mathrm{opt,slave}}}{P_{\mathrm{opt,master}}}
+\right).
+\]
+Here, $P_{\mathrm{opt,slave}}$ and $P_{\mathrm{opt,master}}$ are the average optical powers entering the same photodetector and RF chain for the slave-output measurement and the source-reference measurement, respectively. Because the VNA data are already recorded in dB scale, subtracting the reference removes the source modulation response together with the common photodetector and RF-chain frequency responses. The final term compensates for the AM modulation-depth scaling caused by different average optical powers at the photodetector.
+
+If the optical powers are expressed in dBm, then
+\[
+20\log_{10}
+\left(
+\frac{P_{\mathrm{opt,slave}}}{P_{\mathrm{opt,master}}}
+\right)
+=
+2\left(
+P_{\mathrm{opt,slave,dBm}}
+-
+P_{\mathrm{opt,master,dBm}}
+\right).
+\]
+For example, in the -15~dB injection-ratio experiment, $P_{\mathrm{opt,slave}}=0$~dBm and $P_{\mathrm{opt,master}}=-15$~dBm, so an additional 30~dB is subtracted:
+\[
+H_{\mathrm{exp,dB}}(f)
+=
+S_{21,\mathrm{slave}}(f)
+-
+S_{21,\mathrm{master}}(f)
+-
+30~\mathrm{dB}.
+\]
+In the unmodulated case, no external modulation is applied. The experiment therefore uses the injected-laser RF spectrum measured directly in the SVA spectrum mode. The corresponding simulation is obtained by taking the FFT of the slave-laser output intensity, without dividing by a source-modulation response.
+
+\section{Effective Coupling Calibration}
+
+In the rate-equation simulation code, the injection term is written as $\kappa E_{\mathrm{inj}}$. The original simulation uses
+\[
+\kappa_{\mathrm{scale}} = 1.0,\qquad
+\kappa = \kappa_{\mathrm{scale}}\gamma_c,
+\]
+where
+\[
+\gamma_c=\frac{1}{t_{\mathrm{rt}}},\qquad
+t_{\mathrm{rt}}=7\times10^{-12}~\mathrm{s}.
+\]
+Therefore the nominal coupling rate used in the original simulation is
+\[
+\kappa_0=\gamma_c=\frac{1}{7\times10^{-12}}
+\approx 1.43\times10^{11}~\mathrm{s^{-1}}.
+\]
+By comparing the measured AM-to-AM transfer function with the simulation, the experimental curves show an overall vertical offset of approximately -25~dB relative to the simulated curves. Since the transfer function is represented as an amplitude ratio in dB,
+\[
+H_{\mathrm{dB}}
+=
+20\log_{10}
+\left(
+\frac{A_{\mathrm{out}}}{A_{\mathrm{in}}}
+\right),
+\]
+this offset can be approximated as a scaling of the effective injection coupling strength:
+\[
+20\log_{10}
+\left(
+\frac{\kappa_{\mathrm{eff}}}{\kappa_0}
+\right)
+\approx -25~\mathrm{dB}.
+\]
+Thus,
+\[
+\frac{\kappa_{\mathrm{eff}}}{\kappa_0}
+=
+10^{-25/20}
+\approx 0.056,
+\]
+and the corresponding effective coupling rate is
+\[
+\kappa_{\mathrm{eff}}
+=
+0.056\gamma_c
+\approx
+0.056\times1.43\times10^{11}
+\approx
+8.0\times10^9~\mathrm{s^{-1}}.
+\]
+Equivalently, the experiment can be represented in the simulation using $\kappa_{\mathrm{scale}}\approx0.056$. This estimate treats the overall vertical offset between experiment and simulation as primarily caused by a linear scaling of $\kappa$, so it should be interpreted as an effective coupling calibration rather than as a strict independent measurement of a device parameter.
 
 \section{Comparison with the Simulation Model}
 
